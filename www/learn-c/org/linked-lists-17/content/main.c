@@ -12,6 +12,8 @@ void print_list(node_t * head);
 void push_end(node_t * head, int val);
 void push(node_t ** head, int val);
 int pop(node_t ** head);
+int remove_last(node_t * head);
+int remove_by_index(node_t ** head, int n);
 
 // Entrypoint
 int main() {
@@ -66,7 +68,33 @@ int main() {
   // Pop the first item from the linked list.
   pop(&head);
 
-  // Print list after pushing to it
+  // Print list after popping first item from it
+  printf("-----\n");
+  print_list(head);
+  printf("-----\n");
+
+  // Pop the last item from the linked list.
+  remove_last(head);
+
+  // Print list after popping last item from it
+  printf("-----\n");
+  print_list(head);
+  printf("-----\n");
+
+  // Repopulate with some values
+  push_end(head, 3);
+  push_end(head, 4);
+  push_end(head, 5);
+
+  // Print list after populating it.
+  printf("-----\n");
+  print_list(head);
+  printf("-----\n");
+
+  // Remove by index.
+  remove_by_index(&head, 2);
+
+  // Print list after removing the 2nd index value.
   printf("-----\n");
   print_list(head);
   printf("-----\n");
@@ -114,7 +142,7 @@ int pop(node_t ** head) {
   node_t * next_node = NULL;
 
   if (*head == NULL) {
-    return -1;
+    return retval;
   }
 
   next_node = (*head)->next;
@@ -125,3 +153,55 @@ int pop(node_t ** head) {
   return retval;
 }
 
+// Remove the last item from the linked list
+int remove_last(node_t * head) {
+  int retval = 0;
+
+  /* if there is only one item in the list, remove it */
+  if (head->next == NULL) {
+    retval = head->val;
+    free(head);
+    return retval;
+  }
+
+  /* get to the second to last node in the list */
+  node_t * current = head;
+  while (current->next->next != NULL) {
+    current = current->next;
+  }
+
+  /* now current points to the second to last item of the list, so let's remove current->next */
+  retval = current->next->val;
+  free(current->next);
+  current->next = NULL;
+  return retval;
+}
+
+int remove_by_index(node_t ** head, int n) {
+  int i = 0;
+  int retval = -1;
+  node_t * current = *head;
+  node_t * temp_node = NULL;
+
+  if (n == 0) {
+    return pop(head);
+  }
+
+  for (i = 0; i < n-1; i++) {
+    if (current->next == NULL) {
+      return -1;
+    }
+    current = current->next;
+  }
+
+  if (current->next == NULL) {
+    return -1;
+  }
+
+  temp_node = current->next;
+  retval = temp_node->val;
+  current->next = temp_node->next;
+  free(temp_node);
+
+  return retval;
+}
