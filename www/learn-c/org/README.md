@@ -21,3 +21,4 @@ Find here all the C programming exercises I did on [learn-c.org](https://www.lea
 15. [Arrays and Pointers](./arrays-and-pointers-15/README.md)
 16. [Recursion](./recursion-16/README.md)
 17. [Linked Lists](./linked-lists-17/README.md)
+18. [Binary Trees](./binary-trees-18/README.md)
