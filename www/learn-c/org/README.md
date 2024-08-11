@@ -24,4 +24,4 @@ Find here all the C programming exercises I did on [learn-c.org](https://www.lea
 18. [Binary Trees](./binary-trees-18/README.md)
 19. [Unions](./unions-19/README.md)
 20. [Pointer Arithmetics](./pointer-arithmetics-20/README.md)
-
+21. [Function Pointers](./function-pointers-21/README.md)
