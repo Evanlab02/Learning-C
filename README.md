@@ -4,5 +4,5 @@ This repository serves as my personal space for learning and practicing C progra
 
 ## Contents
 
-1. [learn-c.org](./www/learn-c/org/README.md)
-2. [exercism](./www/exercism/org/README.md)
+1. [learn-c.org](./learn-c/README.md)
+2. [exercism](./exercism/README.md)
