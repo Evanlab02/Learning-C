@@ -1,4 +1,4 @@
-name: Exercism C Exercises CI
+name: Exercism Exercises CI
 
 on:
   push:
@@ -12,19 +12,6 @@ jobs:
   memcheck-and-test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        exercise-dirs: 
-          - "exercism/c/hello-world/"
-          - "exercism/c/leap/"
-          - "exercism/c/difference-of-squares/"
-          - "exercism/c/grains/"
-          - "exercism/c/resistor-color/"
-          - "exercism/c/collatz-conjecture/"
-          - "exercism/c/queen-attack/"
-          - "exercism/c/darts/"
-          - "exercism/c/resistor-color-duo/"
-
     steps:
     # Checkout the repository
     - name: Checkout repository
@@ -32,14 +19,31 @@ jobs:
 
     # Set up the C compiler
     - name: Setup Build Essentials
-      run: apt-get install build-essential
+      run: sudo apt-get install -y build-essential
 
     - name: Run Tests
-      working-directory: ${{ matrix.exercise-dirs }}
+      working-directory: exercism/c/
       run: |
-        make test
+        for dir in $(find . -maxdepth 1 -type d | tail -n +2); do
+          echo "##[group]Processing $dir"
+          cd "$dir"
+          echo "Running tests in $dir"
+          make test
+          echo "Done, moving on..."
+          cd ..
+          echo "##[endgroup]"
+        done
+        
 
     - name: Run Memcheck
-      working-directory: ${{ matrix.exercise-dirs }}
+      working-directory: exercism/c/
       run: |
-        make memcheck
+        for dir in $(find . -maxdepth 1 -type d | tail -n +2); do
+          echo "##[group]Processing $dir"
+          cd "$dir"
+          echo "Running memcheck in $dir"
+          make test
+          echo "Done, moving on..."
+          cd ..
+          echo "##[endgroup]"
+        done
