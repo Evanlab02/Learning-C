@@ -1,0 +1,45 @@
+name: Exercism C Exercises CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  memcheck-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        exercise-dirs: 
+          - "exercism/c/hello-world/"
+          - "exercism/c/leap/"
+          - "exercism/c/difference-of-squares/"
+          - "exercism/c/grains/"
+          - "exercism/c/resistor-color/"
+          - "exercism/c/collatz-conjecture/"
+          - "exercism/c/queen-attack/"
+          - "exercism/c/darts/"
+          - "exercism/c/resistor-color-duo/"
+
+    steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Set up the C compiler
+    - name: Setup Build Essentials
+      run: apt-get install build-essential
+
+    - name: Run Tests
+      working-directory: ${{ matrix.exercise-dirs }}
+      run: |
+        make test
+
+    - name: Run Memcheck
+      working-directory: ${{ matrix.exercise-dirs }}
+      run: |
+        make memcheck
