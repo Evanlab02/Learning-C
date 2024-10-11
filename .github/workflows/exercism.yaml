@@ -1,0 +1,49 @@
+name: Exercism Exercises CI
+
+on:
+  push:
+    branches:
+      - trunk
+  pull_request:
+    branches:
+      - trunk
+
+jobs:
+  memcheck-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Set up the C compiler
+    - name: Setup Build Essentials
+      run: sudo apt-get install -y build-essential
+
+    - name: Run Tests
+      working-directory: exercism/c/
+      run: |
+        for dir in $(find . -maxdepth 1 -type d | tail -n +2); do
+          echo "##[group]Processing $dir"
+          cd "$dir"
+          echo "Running tests in $dir"
+          make test
+          echo "Done, moving on..."
+          cd ..
+          echo "##[endgroup]"
+        done
+        
+
+    - name: Run Memcheck
+      working-directory: exercism/c/
+      run: |
+        for dir in $(find . -maxdepth 1 -type d | tail -n +2); do
+          echo "##[group]Processing $dir"
+          cd "$dir"
+          echo "Running memcheck in $dir"
+          make test
+          echo "Done, moving on..."
+          cd ..
+          echo "##[endgroup]"
+        done
