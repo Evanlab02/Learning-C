@@ -3,10 +3,10 @@ name: Exercism C Exercises CI
 on:
   push:
     branches:
-      - main
+      - trunk
   pull_request:
     branches:
-      - main
+      - trunk
 
 jobs:
   memcheck-and-test:
