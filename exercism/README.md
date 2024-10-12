@@ -13,3 +13,6 @@ Find here all the C programming exercises I did on [exercism](https://exercism.o
 7. [Queen Attack](./c/queen-attack/README.md)
 8. [Darts](./c/darts/README.md)
 9. [Resistor color duo](./c/resistor-color-duo/README.md)
+10. [Hamming](./c/hamming/README.md)
+11. [Space Age](./c/space-age/README.md)
+12. [RNA Transcription](./c/rna-transcription/README.md)
